@@ -111,6 +111,15 @@ class Employee {
     });
   }
 
+  static terminated() {
+    return new Promise((resolve, reject) => {
+      const sql = "SELECT * FROM employees WHERE status = 'terminated'";
+      db.query(sql, (sql, result) => {
+        resolve(result);
+      });
+    });
+  }
+
 }
 
 // export class Employee

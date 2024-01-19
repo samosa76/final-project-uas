@@ -38,13 +38,15 @@ class EmployeeController {
      */
     const requiredFields = ['name', 'gender', 'phone'];
 
-    requiredFields.forEach(field => {
-      if (!req.body[field]) {
-        return res.status(422).json({
-          message: `Field '${field}' is required`
-        });
-      }
-    });
+    // requiredFields.forEach(field => {
+    //   if (!req.body[field]) {
+    //     return res.status(422).json({
+    //       message: `Field '${field}' is required`
+    //     });
+    //   }
+    // });
+
+    
 
     try {
       const employee = await Employee.create(req.body);
@@ -201,7 +203,8 @@ class EmployeeController {
 
     if (employee) {
       const data = {
-        message: "Get Detail Resource",
+        message: "Get active Resource",
+        total : employee.length,
         data: employee,
       };
 
@@ -222,7 +225,8 @@ class EmployeeController {
 
     if (employee) {
       const data = {
-        message: "Get Detail Resource",
+        message: "Get active Resource",
+        total : employee.length,
         data: employee,
       };
 
@@ -237,6 +241,27 @@ class EmployeeController {
     }
   }
 
+  async terminated(req, res){
+
+    const employee = await Employee.terminated();
+
+    if (employee) {
+      const data = {
+        message: "Get terminated Resource",
+        total : employee.length,
+        data: employee,
+      };
+
+      res.status(200).json(data);
+    }
+    else {
+      const data = {
+        message: "Resource not found",
+      };
+
+      res.status(404).json(data);
+    }
+  }
 }
 
 // membuat object EmployeeController
